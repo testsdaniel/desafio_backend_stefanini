@@ -34,9 +34,9 @@ namespace Example.Application.CityService.Service
             return new CreateCityResponse() { Id = newCity.Id };
         }
 
-        public async Task<DeleteCityResponse> DeleteAsync(int id)
+        public async Task<DeleteCityResponse> DeleteAsync(DeleteCityRequest request)
         {
-            var entity = await _db.Example.FirstOrDefaultAsync(item => item.Id == id);
+            var entity = await _db.City.FirstOrDefaultAsync(item => item.Id == request.Id);
 
             if (entity != null)
             {
@@ -67,12 +67,12 @@ namespace Example.Application.CityService.Service
             return response;
         }
 
-        public async Task<UpdateCityResponse> UpdateAsync(int id, UpdateCityRequest request)
+        public async Task<UpdateCityResponse> UpdateAsync(UpdateCityRequest request)
         {
             if (request == null)
                 throw new ArgumentException("Request empty!");
 
-            var entity = await _db.City.FirstOrDefaultAsync(item => item.Id == id);
+            var entity = await _db.City.FirstOrDefaultAsync(item => item.Id == request.Id);
 
             if (entity != null)
             {

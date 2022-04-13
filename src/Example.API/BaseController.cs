@@ -20,11 +20,7 @@ namespace Example.API
 
         [NonAction]
         public IActionResult ExceptionHandling(Exception ex)
-        {
-            var response = new ExceptionHandlingResponse();
-            response.Error = ex.Message;
-            return StatusCode((int)HttpStatusCode.InternalServerError, response);
-        }
+            => StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
 
         [NonAction]
         public IActionResult AuthenticationExceptionHandling(Exception ex)

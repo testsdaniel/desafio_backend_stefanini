@@ -8,7 +8,7 @@ namespace Example.Application.CityService.Service
         Task<GetAllCityResponse> GetAllAsync();
         Task<GetByIdCityResponse> GetByIdAsync(int id);
         Task<CreateCityResponse> CreateAsync(CreateCityRequest request);
-        Task<UpdateCityResponse> UpdateAsync(int id, UpdateCityRequest request);
-        Task<DeleteCityResponse> DeleteAsync(int id);
+        Task<UpdateCityResponse> UpdateAsync(UpdateCityRequest request);
+        Task<DeleteCityResponse> DeleteAsync(DeleteCityRequest request);
     }
 }
