@@ -2,7 +2,7 @@
 
 namespace Example.Application.ExampleService.Models.Response
 {
-    public class UpdateExampleResponse: BaseResponse
+    public class UpdateExampleResponse : BaseResponse
     {
     }
 }

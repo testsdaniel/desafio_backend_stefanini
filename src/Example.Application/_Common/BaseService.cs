@@ -4,11 +4,11 @@ namespace Example.Application.Common
 {
     public abstract class BaseService<T>
     {
-        public readonly ILogger<T> _logger;
+        protected readonly ILogger<T> Logger;
 
         public BaseService(ILogger<T> logger)
         {
-            _logger = logger;
+            Logger = logger;
         }
     }
 }

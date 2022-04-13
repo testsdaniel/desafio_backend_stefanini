@@ -11,7 +11,7 @@ namespace Example.API.Controllers
     {
         private readonly IExampleService _service;
 
-        public ExampleController(ILogger<ExampleController> logger, IExampleService service) : base()
+        public ExampleController(IExampleService service) : base()
         {
             _service = service;
         }
@@ -21,8 +21,8 @@ namespace Example.API.Controllers
         {
             try
             {
-                var action = await _service.GetAllAsync();
-                return Ok(action);
+                var response = await _service.GetAllAsync();
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -35,12 +35,8 @@ namespace Example.API.Controllers
         {
             try
             {
-                var action = await _service.GetByIdAsync(id);
-                return Ok(action);
-            }
-            catch (ArgumentException ex)
-            {
-                return ArgumentExceptionHandling(ex);
+                var response = await _service.GetByIdAsync(id);
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -53,12 +49,8 @@ namespace Example.API.Controllers
         {
             try
             {
-                var action = await _service.CreateAsync(request);
-                return Ok(action);
-            }
-            catch (ArgumentException ex)
-            {
-                return ArgumentExceptionHandling(ex);
+                var response = await _service.CreateAsync(request);
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -66,17 +58,13 @@ namespace Example.API.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] UpdateExampleRequest request)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] UpdateExampleRequest request)
         {
             try
             {
-                var action = await _service.UpdateAsync(id, request);
-                return Ok(action);
-            }
-            catch (ArgumentException ex)
-            {
-                return ArgumentExceptionHandling(ex);
+                var response = await _service.UpdateAsync(request);
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -84,17 +72,13 @@ namespace Example.API.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] DeleteExampleRequest request)
         {
             try
             {
-                var action = await _service.DeleteAsync(id);
-                return Ok(action);
-            }
-            catch (ArgumentException ex)
-            {
-                return ArgumentExceptionHandling(ex);
+                var response = await _service.DeleteAsync(request);
+                return Ok(response);
             }
             catch (Exception ex)
             {

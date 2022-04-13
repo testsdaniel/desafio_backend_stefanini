@@ -1,5 +1,4 @@
-﻿using Example.Application.Common;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace Example.API
@@ -11,31 +10,7 @@ namespace Example.API
         }
 
         [NonAction]
-        public IActionResult ArgumentExceptionHandling(Exception ex)
-        {
-            var response = new ExceptionHandlingResponse();
-            response.Error = ex.Message;
-            return BadRequest(response);
-        }
-
-        [NonAction]
         public IActionResult ExceptionHandling(Exception ex)
             => StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
-
-        [NonAction]
-        public IActionResult AuthenticationExceptionHandling(Exception ex)
-        {
-            var response = new ExceptionHandlingResponse();
-            response.Error = string.Empty;
-            return StatusCode((int)HttpStatusCode.Unauthorized, response);
-        }
-    }
-
-    public class ExceptionHandlingResponse : BaseResponse
-    {
-        public ExceptionHandlingResponse()
-        {
-            this.Success = false;
-        }
     }
 }

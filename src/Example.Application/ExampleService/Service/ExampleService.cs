@@ -12,17 +12,15 @@ namespace Example.Application.ExampleService.Service
     {
         private readonly ExampleContext _db;
 
-        public ExampleService(ILogger<ExampleService> logger, Infra.Data.ExampleContext db) : base(logger)
-        {
-            _db = db;
-        }
+        public ExampleService(ILogger<ExampleService> logger, ExampleContext db) : base(logger)
+            => _db = db;
 
         public async Task<GetAllExampleResponse> GetAllAsync()
         {
             var entity = await _db.Example.ToListAsync();
             return new GetAllExampleResponse()
             {
-                Examples = entity != null ? entity.Select(a => (ExampleDto)a).ToList() : new List<ExampleDto>()
+                Examples = entity?.Select(a => (ExampleDto)a).ToList() ?? new List<ExampleDto>()
             };
         }
 
@@ -43,7 +41,11 @@ namespace Example.Application.ExampleService.Service
             if (request == null)
                 throw new ArgumentException("Request empty!");
 
-            var newExample = Domain.ExampleAggregate.Example.Create(request.Name, request.Age);
+            var newExample = new Domain.Example()
+            {
+                Name = request.Name,
+                Age = request.Age
+            };
 
             _db.Example.Add(newExample);
 
@@ -52,26 +54,27 @@ namespace Example.Application.ExampleService.Service
             return new CreateExampleResponse() { Id = newExample.Id };
         }
 
-        public async Task<UpdateExampleResponse> UpdateAsync(int id, UpdateExampleRequest request)
+        public async Task<UpdateExampleResponse> UpdateAsync(UpdateExampleRequest request)
         {
             if (request == null)
                 throw new ArgumentException("Request empty!");
 
-            var entity = await _db.Example.FirstOrDefaultAsync(item => item.Id == id);
+            var entity = await _db.Example.FirstOrDefaultAsync(item => item.Id == request.Id);
 
             if (entity != null)
             {
-                entity.Update(request.Name, request.Age);
+                entity.Name = request.Name;
+                entity.Age = request.Age;
                 await _db.SaveChangesAsync();
             }
 
             return new UpdateExampleResponse();
         }
 
-        public async Task<DeleteExampleResponse> DeleteAsync(int id)
+        public async Task<DeleteExampleResponse> DeleteAsync(DeleteExampleRequest request)
         {
 
-            var entity = await _db.Example.FirstOrDefaultAsync(item => item.Id == id);
+            var entity = await _db.Example.FirstOrDefaultAsync(item => item.Id == request.Id);
 
             if (entity != null)
             {

@@ -1,9 +1,11 @@
-﻿namespace Example.Application.ExampleService.Models.Response
+﻿namespace Example.Domain
 {
-    public class UpdateExampleRequest
+    public sealed class Example
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
+
         public int Age { get; set; }
     }
 }
