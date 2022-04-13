@@ -15,10 +15,12 @@ namespace Example.Application.CityService.Validators
 
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("City name is mandatory.")
+                .MaximumLength(200).WithMessage("City name has a maximun length of {MaxLength}.")
                 .MustAsync(BeUniqueName).WithMessage("This city is already created.");
 
             RuleFor(x => x.Uf)
-                .NotEmpty().WithMessage("City UF is mandatory.");
+                .NotEmpty().WithMessage("City UF is mandatory.")
+                .MaximumLength(2).WithMessage("City UF has a maximun length of {MaxLength}.");
         }
 
         private async Task<bool> BeUniqueName(UpdateCityRequest request, string _, CancellationToken token)
