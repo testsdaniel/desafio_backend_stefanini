@@ -11,6 +11,8 @@ namespace Example.Infra.Data
 
         public DbSet<City> City { get; set; }
 
+        public DbSet<Person> Person { get; set; }
+
         public ExampleContext(DbContextOptions options) : base(options)
         {
         }
