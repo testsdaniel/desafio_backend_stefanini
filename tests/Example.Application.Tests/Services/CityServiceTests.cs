@@ -9,7 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Example.Application.Tests
+namespace Example.Application.Tests.Services
 {
     public class CityServiceTests
     {
