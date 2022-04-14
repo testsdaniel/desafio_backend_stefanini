@@ -1,7 +1,7 @@
-﻿using Example.Application.Common;
+﻿using Example.Application._Common.Models.Response;
+using Example.Application.Common;
 using Example.Application.PersonService.Models.Dtos;
 using Example.Application.PersonService.Models.Request;
-using Example.Application.PersonService.Models.Response;
 using Example.Domain;
 using Example.Infra.Data;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +16,7 @@ namespace Example.Application.PersonService.Service
         public PersonService(ILogger<PersonService> logger, ExampleContext db) : base(logger)
             => _db = db;
 
-        public async Task<CreatePersonResponse> CreateAsync(CreatePersonRequest request)
+        public async Task<CreateResponse> CreateAsync(CreatePersonRequest request)
         {
             if (request == null)
                 throw new ArgumentException("Request empty!");
@@ -32,10 +32,10 @@ namespace Example.Application.PersonService.Service
             _db.Person.Add(newPerson);
             await _db.SaveChangesAsync();
 
-            return new CreatePersonResponse() { Id = newPerson.Id };
+            return new CreateResponse() { Id = newPerson.Id };
         }
 
-        public async Task<DeletePersonResponse> DeleteAsync(DeletePersonRequest request)
+        public async Task DeleteAsync(DeletePersonRequest request)
         {
             var entity = await _db.Person.FirstOrDefaultAsync(item => item.Id == request.Id);
 
@@ -44,31 +44,29 @@ namespace Example.Application.PersonService.Service
                 _db.Remove(entity);
                 await _db.SaveChangesAsync();
             }
-
-            return new DeletePersonResponse();
         }
 
-        public async Task<GetAllPersonResponse> GetAllAsync()
+        public async Task<GetAllResponse<PersonDto>> GetAllAsync()
         {
             var entity = await _db.Person.ToListAsync();
-            return new GetAllPersonResponse()
+            return new GetAllResponse<PersonDto>()
             {
-                Persons = entity?.Select(a => (PersonDto)a).ToList() ?? new List<PersonDto>()
+                List = entity?.Select(a => (PersonDto)a).ToList() ?? new List<PersonDto>()
             };
         }
 
-        public async Task<GetByIdPersonResponse> GetByIdAsync(int id)
+        public async Task<GetByIdResponse<PersonDto>> GetByIdAsync(int id)
         {
-            var response = new GetByIdPersonResponse();
+            var response = new GetByIdResponse<PersonDto>();
 
             var entity = await _db.Person.FirstOrDefaultAsync(item => item.Id == id);
 
-            if (entity != null) response.Person = (PersonDto)entity;
+            if (entity != null) response.Data = (PersonDto)entity;
 
             return response;
         }
 
-        public async Task<UpdatePersonResponse> UpdateAsync(UpdatePersonRequest request)
+        public async Task UpdateAsync(UpdatePersonRequest request)
         {
             if (request == null)
                 throw new ArgumentException("Request empty!");
@@ -84,8 +82,6 @@ namespace Example.Application.PersonService.Service
 
                 await _db.SaveChangesAsync();
             }
-
-            return new UpdatePersonResponse();
         }
     }
 }

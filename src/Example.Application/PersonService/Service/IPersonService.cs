@@ -1,14 +1,15 @@
-﻿using Example.Application.PersonService.Models.Request;
-using Example.Application.PersonService.Models.Response;
+﻿using Example.Application._Common.Models.Response;
+using Example.Application.PersonService.Models.Dtos;
+using Example.Application.PersonService.Models.Request;
 
 namespace Example.Application.PersonService.Service
 {
     public interface IPersonService
     {
-        Task<GetAllPersonResponse> GetAllAsync();
-        Task<GetByIdPersonResponse> GetByIdAsync(int id);
-        Task<CreatePersonResponse> CreateAsync(CreatePersonRequest request);
-        Task<UpdatePersonResponse> UpdateAsync(UpdatePersonRequest request);
-        Task<DeletePersonResponse> DeleteAsync(DeletePersonRequest request);
+        Task<GetAllResponse<PersonDto>> GetAllAsync();
+        Task<GetByIdResponse<PersonDto>> GetByIdAsync(int id);
+        Task<CreateResponse> CreateAsync(CreatePersonRequest request);
+        Task UpdateAsync(UpdatePersonRequest request);
+        Task DeleteAsync(DeletePersonRequest request);
     }
 }

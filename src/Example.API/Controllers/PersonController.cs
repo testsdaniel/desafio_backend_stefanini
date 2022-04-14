@@ -60,8 +60,8 @@ namespace Example.API.Controllers
         {
             try
             {
-                var response = await _service.UpdateAsync(request);
-                return Ok(response);
+                await _service.UpdateAsync(request);
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -74,8 +74,8 @@ namespace Example.API.Controllers
         {
             try
             {
-                var response = await _service.DeleteAsync(request);
-                return Ok(response);
+                await _service.DeleteAsync(request);
+                return Ok();
             }
             catch (Exception ex)
             {

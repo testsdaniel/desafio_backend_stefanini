@@ -1,14 +1,15 @@
-﻿using Example.Application.CityService.Models.Request;
-using Example.Application.CityService.Models.Response;
+﻿using Example.Application._Common.Models.Response;
+using Example.Application.CityService.Models.Dtos;
+using Example.Application.CityService.Models.Request;
 
 namespace Example.Application.CityService.Service
 {
     public interface ICityService
     {
-        Task<GetAllCityResponse> GetAllAsync();
-        Task<GetByIdCityResponse> GetByIdAsync(int id);
-        Task<CreateCityResponse> CreateAsync(CreateCityRequest request);
-        Task<UpdateCityResponse> UpdateAsync(UpdateCityRequest request);
-        Task<DeleteCityResponse> DeleteAsync(DeleteCityRequest request);
+        Task<GetAllResponse<CityDto>> GetAllAsync();
+        Task<GetByIdResponse<CityDto>> GetByIdAsync(int id);
+        Task<CreateResponse> CreateAsync(CreateCityRequest request);
+        Task UpdateAsync(UpdateCityRequest request);
+        Task DeleteAsync(DeleteCityRequest request);
     }
 }

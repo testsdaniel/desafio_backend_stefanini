@@ -1,6 +1,6 @@
-﻿using Example.Application.CityService.Models.Dtos;
+﻿using Example.Application._Common.Models.Response;
+using Example.Application.CityService.Models.Dtos;
 using Example.Application.CityService.Models.Request;
-using Example.Application.CityService.Models.Response;
 using Example.Application.Common;
 using Example.Domain;
 using Example.Infra.Data;
@@ -16,7 +16,7 @@ namespace Example.Application.CityService.Service
         public CityService(ILogger<CityService> logger, ExampleContext db) : base(logger)
             => _db = db;
 
-        public async Task<CreateCityResponse> CreateAsync(CreateCityRequest request)
+        public async Task<CreateResponse> CreateAsync(CreateCityRequest request)
         {
             if (request == null)
                 throw new ArgumentException("Request empty!");
@@ -31,10 +31,10 @@ namespace Example.Application.CityService.Service
 
             await _db.SaveChangesAsync();
 
-            return new CreateCityResponse() { Id = newCity.Id };
+            return new CreateResponse() { Id = newCity.Id };
         }
 
-        public async Task<DeleteCityResponse> DeleteAsync(DeleteCityRequest request)
+        public async Task DeleteAsync(DeleteCityRequest request)
         {
             var entity = await _db.City.FirstOrDefaultAsync(item => item.Id == request.Id);
 
@@ -43,31 +43,29 @@ namespace Example.Application.CityService.Service
                 _db.Remove(entity);
                 await _db.SaveChangesAsync();
             }
-
-            return new DeleteCityResponse();
         }
 
-        public async Task<GetAllCityResponse> GetAllAsync()
+        public async Task<GetAllResponse<CityDto>> GetAllAsync()
         {
             var entity = await _db.City.ToListAsync();
-            return new GetAllCityResponse()
+            return new GetAllResponse<CityDto>()
             {
-                Cities = entity?.Select(a => (CityDto)a).ToList() ?? new List<CityDto>()
+                List = entity?.Select(a => (CityDto)a).ToList() ?? new List<CityDto>()
             };
         }
 
-        public async Task<GetByIdCityResponse> GetByIdAsync(int id)
+        public async Task<GetByIdResponse<CityDto>> GetByIdAsync(int id)
         {
-            var response = new GetByIdCityResponse();
+            var response = new GetByIdResponse<CityDto>();
 
             var entity = await _db.City.FirstOrDefaultAsync(item => item.Id == id);
 
-            if (entity != null) response.City = (CityDto)entity;
+            if (entity != null) response.Data = (CityDto)entity;
 
             return response;
         }
 
-        public async Task<UpdateCityResponse> UpdateAsync(UpdateCityRequest request)
+        public async Task UpdateAsync(UpdateCityRequest request)
         {
             if (request == null)
                 throw new ArgumentException("Request empty!");
@@ -81,8 +79,6 @@ namespace Example.Application.CityService.Service
 
                 await _db.SaveChangesAsync();
             }
-
-            return new UpdateCityResponse();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Example.Application.Common;
+﻿using Example.Application._Common.Models.Response;
+using Example.Application.Common;
 using Example.Application.ExampleService.Models.Dtos;
 using Example.Application.ExampleService.Models.Request;
 using Example.Application.ExampleService.Models.Response;
@@ -15,28 +16,28 @@ namespace Example.Application.ExampleService.Service
         public ExampleService(ILogger<ExampleService> logger, ExampleContext db) : base(logger)
             => _db = db;
 
-        public async Task<GetAllExampleResponse> GetAllAsync()
+        public async Task<GetAllResponse<ExampleDto>> GetAllAsync()
         {
             var entity = await _db.Example.ToListAsync();
-            return new GetAllExampleResponse()
+            return new GetAllResponse<ExampleDto>()
             {
-                Examples = entity?.Select(a => (ExampleDto)a).ToList() ?? new List<ExampleDto>()
+                List = entity?.Select(a => (ExampleDto)a).ToList() ?? new List<ExampleDto>()
             };
         }
 
-        public async Task<GetByIdExampleResponse> GetByIdAsync(int id)
+        public async Task<GetByIdResponse<ExampleDto>> GetByIdAsync(int id)
         {
 
-            var response = new GetByIdExampleResponse();
+            var response = new GetByIdResponse<ExampleDto>();
 
             var entity = await _db.Example.FirstOrDefaultAsync(item => item.Id == id);
 
-            if (entity != null) response.Example = (ExampleDto)entity;
+            if (entity != null) response.Data = (ExampleDto)entity;
 
             return response;
         }
 
-        public async Task<CreateExampleResponse> CreateAsync(CreateExampleRequest request)
+        public async Task<CreateResponse> CreateAsync(CreateExampleRequest request)
         {
             if (request == null)
                 throw new ArgumentException("Request empty!");
@@ -51,10 +52,10 @@ namespace Example.Application.ExampleService.Service
 
             await _db.SaveChangesAsync();
 
-            return new CreateExampleResponse() { Id = newExample.Id };
+            return new CreateResponse() { Id = newExample.Id };
         }
 
-        public async Task<UpdateExampleResponse> UpdateAsync(UpdateExampleRequest request)
+        public async Task UpdateAsync(UpdateExampleRequest request)
         {
             if (request == null)
                 throw new ArgumentException("Request empty!");
@@ -67,13 +68,10 @@ namespace Example.Application.ExampleService.Service
                 entity.Age = request.Age;
                 await _db.SaveChangesAsync();
             }
-
-            return new UpdateExampleResponse();
         }
 
-        public async Task<DeleteExampleResponse> DeleteAsync(DeleteExampleRequest request)
+        public async Task DeleteAsync(DeleteExampleRequest request)
         {
-
             var entity = await _db.Example.FirstOrDefaultAsync(item => item.Id == request.Id);
 
             if (entity != null)
@@ -81,8 +79,6 @@ namespace Example.Application.ExampleService.Service
                 _db.Remove(entity);
                 await _db.SaveChangesAsync();
             }
-
-            return new DeleteExampleResponse();
         }
     }
 }
