@@ -47,10 +47,10 @@ namespace Example.Application.CityService.Service
 
         public async Task<GetAllResponse<CityDto>> GetAllAsync()
         {
-            var entity = await _db.City.ToListAsync();
+            var entities = await _db.City.ToListAsync();
             return new GetAllResponse<CityDto>()
             {
-                List = entity?.Select(a => (CityDto)a).ToList() ?? new List<CityDto>()
+                List = entities?.Select(a => (CityDto)a).ToList() ?? new List<CityDto>()
             };
         }
 
