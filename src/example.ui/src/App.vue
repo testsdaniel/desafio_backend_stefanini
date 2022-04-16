@@ -57,8 +57,8 @@ export default {
       drawer: null,
       links: [
         ['mdi-home', 'Home', '/'],
-        ['mdi-map-marker', 'Cidades', '/city'],
-        ['mdi-account', 'Pessoas', '/person']
+        ['mdi-map-marker', 'Cities', '/city'],
+        ['mdi-account', 'Persons', '/person']
       ],
   }),
 };
