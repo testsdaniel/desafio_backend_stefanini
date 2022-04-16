@@ -41,7 +41,7 @@ import SimpleCrud from './shared/SimpleCrud.vue'
         { text: 'Nome', value: 'name' },
         { text: 'CPF', value: 'cpf' },
         { text: 'Idade', value: 'age' },
-        { text: 'Cidade', value: 'city' },
+        { text: 'Cidade', value: 'cityName' },
         { text: 'Ações', value: 'actions', sortable: false },
       ],
       record: { name: '', cpf: '', age: 0, cityId: 0 }

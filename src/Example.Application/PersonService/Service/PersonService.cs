@@ -48,7 +48,7 @@ namespace Example.Application.PersonService.Service
 
         public async Task<GetAllResponse<PersonDto>> GetAllAsync()
         {
-            var entity = await _db.Person.ToListAsync();
+            var entity = await _db.Person.Include(x => x.City).ToListAsync();
             return new GetAllResponse<PersonDto>()
             {
                 List = entity?.Select(a => (PersonDto)a).ToList() ?? new List<PersonDto>()

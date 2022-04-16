@@ -8,6 +8,7 @@ namespace Example.Application.PersonService.Models.Dtos
         public string Name { get; set; }
         public string Cpf { get; set; }
         public int CityId { get; set; }
+        public string CityName { get; set; }
         public int Age { get; set; }
 
         public static explicit operator PersonDto(Person person)
@@ -18,6 +19,7 @@ namespace Example.Application.PersonService.Models.Dtos
                 Name = person.Name,
                 Cpf = person.Cpf,
                 CityId = person.CityId,
+                CityName = person.City.Name,
                 Age = person.Age
             };
         }
