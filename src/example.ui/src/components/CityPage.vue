@@ -9,16 +9,11 @@
 	</v-container>
 </template>
 <script>
+import ApiService from "../services/ApiService";
 export default {
-	data: () => ({
-      cards: ['Today', 'Yesterday'],
-      drawer: null,
-      links: [
-        ['mdi-inbox-arrow-down', 'Inbox'],
-        ['mdi-send', 'Send'],
-        ['mdi-delete', 'Trash'],
-        ['mdi-alert-octagon', 'Spam'],
-      ],
-    }),
+	data: () => ({}),
+  mounted() {
+    ApiService.getAll('/City')
+  }
 }
 </script>
