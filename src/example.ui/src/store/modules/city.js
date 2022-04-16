@@ -1,7 +1,7 @@
 import CityApi from '../../services/CityApi'
 
 // initial state
-// shape: [{ name, uf }]
+// shape: [{ id, name, uf }]
 const state = {
 	items: [],
 	errors: {}
