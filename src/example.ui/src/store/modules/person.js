@@ -48,7 +48,7 @@ const mutations = {
 		state.errors = errors
 	},
 	clearErrors(state) {
-		state.errors = []
+		state.errors = {}
 	}
 }
 

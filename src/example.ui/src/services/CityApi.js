@@ -41,9 +41,14 @@ export default {
                     console.log(err)
             })
     },
-    delete(id, cbSuccess) {
+    delete(id, cbSuccess, cbError) {
         return axiosInstance.delete('/City', { data: { id } })
-            .catch(err => console.log(err))
             .then(response => { if (response) cbSuccess() })
+            .catch(err => { 
+                if(err.response && err.response.status === 400) {
+                    cbError(err.response.data.errors) 
+                } else
+                    console.log(err)
+            })
     }
 };

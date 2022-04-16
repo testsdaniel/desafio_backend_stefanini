@@ -24,7 +24,8 @@ const actions = {
 			errors => commit('setErrors', errors))
 	},
 	deleteCity({ commit }, id) {
-		CityApi.delete(id, () => commit('deleteCity', id))
+		CityApi.delete(id, () => commit('deleteCity', id),
+		errors => commit('setErrors', errors))
 	},
 	clearCityErrors({ commit }) {
 		commit('clearErrors')
@@ -48,7 +49,7 @@ const mutations = {
 		state.errors = errors
 	},
 	clearErrors(state) {
-		state.errors = []
+		state.errors = {}
 	}
 }
 

@@ -4,6 +4,7 @@
     :columns="columns"
     :record="record"
     :list="store.items"
+    :errors="store.errors"
     @create="createCity"
     @update="updateCity"
     @delete="deleteCity"

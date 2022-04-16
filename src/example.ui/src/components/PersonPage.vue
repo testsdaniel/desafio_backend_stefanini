@@ -4,6 +4,7 @@
     :columns="columns"
     :record="record"
     :list="store.items"
+    :errors="store.errors"
     @create="createPerson"
     @update="updatePerson"
     @delete="deletePerson"
