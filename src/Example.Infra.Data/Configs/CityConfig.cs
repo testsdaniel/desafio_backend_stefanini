@@ -14,6 +14,8 @@ namespace Example.Infra.Data.Configs
             builder.Property(x => x.Id).UseIdentityColumn();
             builder.Property(x => x.Name).HasMaxLength(200).IsRequired();
             builder.Property(x => x.Uf).HasMaxLength(2).IsRequired();
+
+            builder.HasIndex(p => new { p.Name, p.Uf });
         }
     }
 }
