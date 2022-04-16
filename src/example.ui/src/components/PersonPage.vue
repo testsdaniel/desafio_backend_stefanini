@@ -18,7 +18,7 @@
           <v-text-field v-model="record.name" label="Person name" :error-messages="store.errors.Name"/>
         </v-col>
         <v-col cols="9">
-          <v-text-field v-model="record.cpf" label="CPF" :error-messages="store.errors.Cpf"/>
+          <v-text-field v-model="record.cpf" label="CPF" :error-messages="store.errors.Cpf" v-mask="'###.###.###-##'" />
         </v-col>
         <v-col cols="3">
           <v-text-field v-model="record.age" label="Age" type="number" :error-messages="store.errors.Age"/>

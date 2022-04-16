@@ -22,6 +22,7 @@ export default {
             .then(response => { if (response) cbSuccess(response.data.list) })
     },
     create(request, cbSuccess, cbError) {
+        request.cpf = request.cpf.replace(/\D/g, "")
         return axiosInstance.post('/Person', request)
             .then(response => { if (response) cbSuccess(response.data.id) })
             .catch(err => { 
