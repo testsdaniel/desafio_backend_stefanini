@@ -17,6 +17,7 @@
               dark
               class="mb-2"
               v-bind="attrs"
+              @click="$emit('reload')"
             >
               <v-icon>mdi-refresh</v-icon>
             </v-btn>
@@ -102,11 +103,16 @@
 
     watch: {
       dialog (val) {
+        if(val) this.$emit('reset-form')
         val || this.close()
       },
       dialogDelete (val) {
         val || this.closeDelete()
       },
+      list(list) {
+        this.data = Object.assign([], list)
+        this.close()
+      }
     },
 
     created () {
@@ -134,7 +140,7 @@
       },
 
       deleteItemConfirm () {
-        this.data.splice(this.editedIndex, 1)
+        this.$emit('delete', this.editedItem.id)
         this.closeDelete()
       },
 
@@ -156,11 +162,10 @@
 
       save () {
         if (this.editedIndex > -1) {
-          Object.assign(this.data[this.editedIndex], this.editedItem)
+          this.$emit('update', this.editedItem)
         } else {
-          this.data.push(this.editedItem)
+          this.$emit('create', this.editedItem)
         }
-        this.close()
       },
     },
   }

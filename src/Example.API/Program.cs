@@ -34,7 +34,7 @@ using (var scope = app.Services.CreateScope())
     dataContext.Database.Migrate();
 }
 
-app.UseCors(options => options.AllowAnyOrigin());
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 app.UseAuthorization();
 
