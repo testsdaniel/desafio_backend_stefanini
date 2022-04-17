@@ -7,7 +7,11 @@ const state = {
 	errors: {}
 }
 
-const getters = {}
+const getters = {
+	getCityById: (state) => id  => {
+		return state.items.find(city => city.id === id)
+	}
+}
 
 const actions = {
     getAllCities({ commit }) {

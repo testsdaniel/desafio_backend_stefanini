@@ -1,14 +1,4 @@
-
-import axios from 'axios'
-
-const axiosInstance = axios.create({
-    baseURL: 'http://localhost:50441/api',
-    timeout: 1000,
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    }
-});
+import axiosInstance from './AxiosInstance'
 
 export default {
     getById(id, cbSuccess) {
@@ -33,6 +23,7 @@ export default {
             })
     },
     update(request, cbSuccess, cbError) {
+        request.cpf = request.cpf.replace(/\D/g, "")
         return axiosInstance.put('/Person', request)
             .then(response => { if (response) cbSuccess() })
             .catch(err => { 

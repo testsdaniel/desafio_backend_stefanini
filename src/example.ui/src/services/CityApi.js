@@ -1,14 +1,5 @@
 
-import axios from 'axios'
-
-const axiosInstance = axios.create({
-    baseURL: 'http://localhost:50441/api',
-    timeout: 1000,
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    }
-});
+import axiosInstance from './AxiosInstance'
 
 export default {
     getById(id, cbSuccess) {
