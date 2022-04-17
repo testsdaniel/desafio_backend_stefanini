@@ -13,6 +13,7 @@ namespace Example.Application.Tests.Services
 {
     public class PersonServiceTests
     {
+        private readonly City _city;
         private Infra.Data.ExampleContext _context;
         private PersonService.Service.PersonService _service;
 
@@ -23,7 +24,9 @@ namespace Example.Application.Tests.Services
             var loggerMock = new Mock<ILogger<PersonService.Service.PersonService>>();
             _service = new PersonService.Service.PersonService(loggerMock.Object, _context);
 
-            _context.City.Add(new City() { Name = "City Test", Uf = "SC" });
+            _city = new City() { Name = "City Test", Uf = "SC" };
+
+            _context.City.Add(_city);
             _context.SaveChanges();
         }
 
@@ -45,7 +48,7 @@ namespace Example.Application.Tests.Services
                 Name = "Person Test",
                 Cpf = "76245519004",
                 Age = 18,
-                CityId = 1
+                CityId = _city.Id
             };
             await _context.Person.AddAsync(person);
             await _context.SaveChangesAsync();
@@ -63,7 +66,7 @@ namespace Example.Application.Tests.Services
                 Name = "Person Test",
                 Cpf = "76245519004",
                 Age = 18,
-                CityId = 1
+                CityId = _city.Id
             };
             await _context.Person.AddAsync(person);
             await _context.SaveChangesAsync();
@@ -91,7 +94,7 @@ namespace Example.Application.Tests.Services
                 Name = "Test create person",
                 Cpf = "76245519004",
                 Age = 18,
-                CityId = 1
+                CityId = _city.Id
             };
 
             var response = await _service.CreateAsync(request);
@@ -116,7 +119,7 @@ namespace Example.Application.Tests.Services
                 Name = "Person Test",
                 Cpf = "76245519004",
                 Age = 18,
-                CityId = 1
+                CityId = _city.Id
             };
 
             await _context.Person.AddAsync(person);
@@ -128,7 +131,7 @@ namespace Example.Application.Tests.Services
                 Name = "Person test updated",
                 Cpf = "76245519004",
                 Age = 22,
-                CityId = 1
+                CityId = _city.Id
             };
             await _service.UpdateAsync(request);
 
@@ -155,7 +158,7 @@ namespace Example.Application.Tests.Services
                 Name = "Person test to delete",
                 Cpf = "76245519004",
                 Age = 18,
-                CityId = 1
+                CityId = _city.Id
             };
 
             await _context.Person.AddAsync(person);
@@ -163,7 +166,7 @@ namespace Example.Application.Tests.Services
 
             await _service.DeleteAsync(new DeletePersonRequest() { Id = person.Id });
 
-            var exists = await _context.City.AnyAsync(x => x.Id == person.Id);
+            var exists = await _context.Person.AnyAsync(x => x.Id == person.Id);
 
             exists.Should().BeFalse();
         }
